@@ -2,15 +2,11 @@ let books;
 
 async function renderBooks(filter) {
   const booksWrapper = document.querySelector(".books");
-
   booksWrapper.classList += ' books__loading'
-
   if (!books) {
     books = await getBooks();
   }
-  
-  booksWrapper.classList.remove('books__loading')
-
+    booksWrapper.classList.remove('books__loading')
   if (filter === "LOW_TO_HIGH") {
     books.sort(
       (a, b) =>
@@ -24,7 +20,6 @@ async function renderBooks(filter) {
   } else if (filter === "RATING") {
     books.sort((a, b) => b.rating - a.rating);
   }
-
   const booksHtml = books
     .map((book) => {
       return `<div class="book">
@@ -43,10 +38,8 @@ async function renderBooks(filter) {
   </div>`;
     })
     .join("");
-
   booksWrapper.innerHTML = booksHtml;
 }
-
 function priceHTML(originalPrice, salePrice) {
   if (!salePrice) {
     return `$${originalPrice.toFixed(2)}`;
@@ -55,7 +48,6 @@ function priceHTML(originalPrice, salePrice) {
     2
   )}</span>$${salePrice.toFixed(2)}`;
 }
-
 function ratingsHTML(rating) {
   let ratingHTML = "";
   for (let i = 0; i < Math.floor(rating); ++i) {
@@ -66,16 +58,13 @@ function ratingsHTML(rating) {
   }
   return ratingHTML;
 }
-
 function filterBooks(event) {
   renderBooks(event.target.value);
 }
-
 setTimeout(() => {
   renderBooks();
 });
-
-// FAKE INFO
+// SPOOF INFO
 function getBooks() {
   return new Promise((resolve) => {
     setTimeout(() => {

@@ -36,8 +36,6 @@ a:hover {
   text-decoration: underline;
 }
 
-
-
 ul {
   display: flex;
 }
@@ -175,13 +173,6 @@ button:active {
   color: white;
 }
 
-
-/* 
-
-LANDING
-
-*/
-
 #landing {
   background-color: rgba(115, 66, 214, 0.1)
 }
@@ -209,8 +200,7 @@ header {
 .header__img--wrapper {
   padding: 20px;
 
-  /* Added this after the tutorial to 
-  show it over the wave on larger screens */
+  /* After tutorial to show it over the wave on larger screens */
   z-index: 50;
 }
 
@@ -233,11 +223,6 @@ header {
 .no-cursor {
   cursor: not-allowed;
 }
-/* 
-
-HIGHLIGHTS 
-
-*/
 
 #highlights {
   position: relative;
@@ -304,12 +289,6 @@ HIGHLIGHTS
   text-align: center;
 }
 
-/* 
-
-FEATURES 
-
-*/
-
 #features {
   padding-top: 8vw;
   background-color: rgba(115, 66, 214, 0.1);
@@ -323,7 +302,7 @@ FEATURES
 .book {
   width: 25%;
   padding: 24px;
-  /* Added after tutorial to push all the books images down */
+  /* After tutorial to push all the books images down */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -333,7 +312,7 @@ FEATURES
   max-height: 380px;
   transition: all 300ms ease;
   cursor: not-allowed;
-  /* Added after tutorial to maintain image aspect ratio */
+  /* After tutorial to maintain img aspect ratio */
   object-fit: contain;
   object-position: left;
 }
@@ -370,21 +349,9 @@ FEATURES
   color: #bfbfbf;
 }
 
-/* 
-
-EXPLORE
-
-*/
-
 #explore {
   background-color: rgba(115, 66, 214, 0.1);
 }
-
-/* 
-
-FOOTER
-
-*/
 
 footer {
   background-color: #242424;
@@ -411,14 +378,6 @@ footer {
 .footer__link {
   padding: 0 8px;
 }
-
-/* 
-**
-
-BOOKS PAGE
-
-**
-*/
 
 #books__body {
   background-color: rgba(115, 66, 214, 0.1);
@@ -487,7 +446,7 @@ select {
   }
 }
 
-/* SMALL PHONES, TABLETS, LARGE SMARTPHONES */
+/* TABLETS */
 @media (max-width: 768px) {
   .header__description {
     padding: 0 24px;
@@ -511,7 +470,7 @@ select {
 }
 
 
-/* SMALL PHONES, LARGE SMARTPHONES */
+/* SMALL, LARGE SMARTPHONES */
 @media (max-width: 550px) {
   .btn__menu {
     display: block;
