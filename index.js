@@ -69,10 +69,19 @@ function showMovie(id) {
     window.location.href = window.location.origin + "/movie.html";
 }
 function movieHTML(movie) {
-    const posterSrc = movie.Poster !== 'N/A' ? movie.Poster : 'https://placeholder.com';
+    let imageElementHtml = "";
+    if (movie.Poster && movie.Poster !== 'N/A') {
+        imageElementHtml = '<img src="' + movie.Poster + '" alt="' + movie.Title + '">';
+    } else {
+        imageElementHtml = (
+            '<div class="no-poster-fallback">' +
+                '<span>' + movie.Title + '</span>' +
+            '</div>'
+        );
+    }
     return (
         '<div class="movie-card" onclick="showMovie(\'' + movie.imdbID + '\')">' +
-            '<img src="' + posterSrc + '" alt="' + movie.Title + '">' +
+            imageElementHtml + 
             '<div class="movie-card__container">' +
                 '<h3>' + movie.Title + '</h3>' +
                 '<p><strong>Type:</strong> ' + movie.Type + '</p>' +
@@ -100,3 +109,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     executeSearch(); 
 });
+function movieHTML(movie) {
+    const isMissing = !movie.Poster || movie.Poster === 'N/A';
+    const fallbackHTML = 
+        '<div class="no-poster-fallback">' +
+            '<span>' + movie.Title + '</span>' +
+        '</div>';
+    if (isMissing) {
+        return (
+            '<div class="movie-card" onclick="showMovie(\'' + movie.imdbID + '\')">' +
+                fallbackHTML +
+                '<div class="movie-card__container">' +
+                    '<h3>' + movie.Title + '</h3>' +
+                    '<p><strong>Type:</strong> ' + movie.Type + '</p>' +
+                    '<p><strong>Year:</strong> ' + movie.Year + '</p>' +
+                '</div>' +
+            '</div>'
+        );
+    }
+    return (
+        '<div class="movie-card" onclick="showMovie(\'' + movie.imdbID + '\')">' +
+            '<img src="' + movie.Poster + '" alt="' + movie.Title + '" onerror="handleBrokenImage(this, \'' + movie.Title.replace(/'/g, "\\'") + '\')">' +
+            '<div class="movie-card__container">' +
+                '<h3>' + movie.Title + '</h3>' +
+                '<p><strong>Type:</strong> ' + movie.Type + '</p>' +
+                '<p><strong>Year:</strong> ' + movie.Year + '</p>' +
+            '</div>' +
+        '</div>'
+    );
+}
+function handleBrokenImage(imageElement, movieTitle) {
+    const parentCard = imageElement.parentElement;
+    const fallbackDiv = document.createElement('div');
+    fallbackDiv.className = 'no-poster-fallback';
+    fallbackDiv.innerHTML = '<span>' + movieTitle + '</span>';
+    parentCard.replaceChild(fallbackDiv, imageElement);
+}

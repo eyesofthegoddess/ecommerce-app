@@ -3454,3 +3454,34 @@ input, select, textarea {
         transform: rotate(360deg);
     }
 }
+
+#main .no-poster-fallback {
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(135deg, #2c3e50, #34495e); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+}
+
+#main .no-poster-fallback span {
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    line-height: 1.4;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+#main .no-poster-fallback::before {
+    content: "🎬"; 
+    font-size: 2.5rem;
+}
