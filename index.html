@@ -33,7 +33,7 @@
 							<li><a href="#cta">Join Now</a></li>
 						</ul>
 					</nav>
-					<div id="main">
+				<div id="main">
 							<section id="intro" class="main">
 								<div class="spotlight">
 									<div class="content">
@@ -75,12 +75,26 @@
 									<h2>Lets Search</h2>
 									<p>Find what you need for your watching time.<br />
 									Search away! No need to wait. </p>
-									
+								<div id="main">
+								<div id="main">
+    <div class="search--container" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+        <input type="text" id="search-input" placeholder="Enter movie title..." style="max-width: 300px;">
+        <select id="filter-type" style="max-width: 150px;">
+            <option value="">All Types</option>
+            <option value="movie">Movies</option>
+            <option value="series">Series</option>
+            <option value="episode">Episodes</option>
+        </select>
+        <input type="number" id="filter-year" placeholder="Year (e.g. 2024)" min="1900" max="2030" style="max-width: 130px;">
+        <button class="primary" onclick="executeSearch()">Search</button>
+    </div>
+    <div class="movie-container"></div>
+</div>
+<script src="index.js"></script>
+    					<div class="movie-container">
+						</div>
+							</div>	
 									<div>
-        								<div id="search-container">
-            								<input type="text" id="search" placeholder="Search for a movie...">
-            								<button id="searchBtn">Search</button>
-        								</div>
         								<div id="results"></div>
     								</div>
            					<div class="row">
@@ -100,7 +114,7 @@
 									<p>Get started for free and continue for free. </p>
 								</header>
 							</section>
-					</div>
+				</div>
 					<footer id="footer">
 						<section>
 							<h2>Thank You For Visiting Us</h2>
