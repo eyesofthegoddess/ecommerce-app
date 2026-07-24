@@ -84,6 +84,13 @@
 											<option value="episode">Episodes</option>
 										</select>
 										<input type="number" id="filter-year" placeholder="Year (e.g. 2024)" min="1900" max="2030" style="max-width: 130px;">
+										        <select id="filter-sort" style="max-width: 190px;">
+													<option value="">Sort By (Default)</option>
+													<option value="alpha-az">Alphabetical A to Z</option>
+													<option value="alpha-za">Alphabetical Z to A</option>
+													<option value="date-new">Newest to Oldest</option>
+													<option value="date-old">Oldest to Newest</option>
+												</select>
 										<button class="primary" onclick="executeSearch()">Search</button>
 										<button class="reset-btn" onclick="clearFilters()">Reset</button>
 									</div>

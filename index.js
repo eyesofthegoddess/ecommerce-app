@@ -1,6 +1,5 @@
 const MY_API_KEY = "7d6c7720"; 
-const DEFAULT_SEARCH = "batman";
-async function main(searchTerm = "", typeFilter = "", yearFilter = "") {
+async function main(searchTerm = "", typeFilter = "", yearFilter = "", sortBy = "") {
     const movieContainerEl = document.querySelector('#main .movie-container');
     if (!movieContainerEl) return;
     if (!searchTerm || searchTerm.trim() === "") {
@@ -24,36 +23,46 @@ async function main(searchTerm = "", typeFilter = "", yearFilter = "") {
         if (yearFilter && yearFilter.trim().length === 4) {
             params.append("y", yearFilter.trim());
         }
-        const URL = "https://www.omdbapi.com/?" + params.toString();
-        console.log("Connecting to dynamic filtered resource:", URL);
+        const URL = "https://omdbapi.com?" + params.toString();
         const response = await fetch(URL);
         const movieData = await response.json();
         if (movieData.Response === "True") {
-            movieContainerEl.innerHTML = movieData.Search.map((movie) => movieHTML(movie)).join('');
+            let movies = movieData.Search;
+            if (sortBy === "alpha-az") {
+                movies.sort((a, b) => a.Title.localeCompare(b.Title));
+            } else if (sortBy === "alpha-za") {
+                movies.sort((a, b) => b.Title.localeCompare(a.Title));
+            } else if (sortBy === "date-new") {
+                movies.sort((a, b) => parseInt(b.Year) - parseInt(a.Year));
+            } else if (sortBy === "date-old") {
+                movies.sort((a, b) => parseInt(a.Year) - parseInt(b.Year));
+            }
+            movieContainerEl.innerHTML = movies.map((movie) => movieHTML(movie)).join('');
         } else {
             movieContainerEl.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #636363;">
                     <p>No matches found for <strong>"${searchTerm}"</strong> with your selected filters.</p>
-                    <small>Try adjusting your filters or checking your spelling.</small>
                 </div>`;
         }
     } catch (error) {
         console.error("Error fetching data:", error);
-        movieContainerEl.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: red;">Failed to load data. Please check your connection.</p>`;
+        movieContainerEl.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: red;">Failed to load data.</p>`;
     }
-}
-function clearFilters() {
-    document.getElementById('search-input').value = "";
-    document.getElementById('filter-type').value = "";
-    document.getElementById('filter-year').value = "";
-    main("", "", "");
 }
 function executeSearch() {
     const inputVal = document.getElementById('search-input').value;
     const typeVal = document.getElementById('filter-type').value;
     const yearVal = document.getElementById('filter-year').value;
-    const finalSearch = inputVal.trim() !== "" ? inputVal : DEFAULT_SEARCH;
-    main(finalSearch, typeVal, yearVal);
+    const sortVal = document.getElementById('filter-sort').value; 
+    
+    main(inputVal, typeVal, yearVal, sortVal);
+}
+function clearFilters() {
+    document.getElementById('search-input').value = "";
+    document.getElementById('filter-type').value = "";
+    document.getElementById('filter-year').value = "";
+    document.getElementById('filter-sort').value = ""; 
+    main("", "", "", "");
 }
 function showMovie(id) {
     localStorage.setItem("id", id);
@@ -76,14 +85,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                executeSearch();
-            }
+            if (event.key === "Enter") executeSearch();
         });
     }
-    const typeSelect = document.getElementById('filter-type');
-    if (typeSelect) {
-        typeSelect.addEventListener("change", executeSearch);
+    document.getElementById('filter-type')?.addEventListener("change", executeSearch);
+    document.getElementById('filter-sort')?.addEventListener("change", executeSearch);
+
+    const yearInput = document.getElementById('filter-year');
+    if (yearInput) {
+        yearInput.addEventListener("input", () => {
+            const val = yearInput.value.trim();
+            if (val === "" || val.length === 4) executeSearch();
+        });
     }
-    main(); 
+    executeSearch(); 
 });
